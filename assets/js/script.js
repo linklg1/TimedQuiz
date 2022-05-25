@@ -1,32 +1,34 @@
-//buttons//
+//start button//
 var startbutton = document.querySelector("#startbutton");
-var submitall = document.getElementById("submitall");
+
 
 //questions//
+var allquestions = document.querySelector("#allquestions")
+
 var question1 = document.querySelector("#question-1");
 var question2 = document.getElementById("question-2");
 var question3 = document.getElementById("question-3");
 var question4 = document.getElementById("question-4");
 
-//answer set 1//
+//buttons: answer set 1//
 var correct1 = document.querySelector("#correct1");
 var incorrect1of1 = document.querySelector("#incorrect1of1");
 var incorrect2of1 = document.querySelector("#incorrect2of1");
 var incorrect3of1 = document.querySelector("#incorrect3of1");
 
-//answer set 2//
+//buttons: answer set 2//
 var correct2 = document.querySelector("#correct2");
 var incorrect1of2 = document.querySelector("#incorrect1of2");
 var incorrect2of2 = document.querySelector("#incorrect2of2");
 var incorrect3of2 = document.querySelector("#incorrect3of2");
 
-//answer set 3//
+//buttons: answer set 3//
 var correct3 = document.querySelector("#correct3");
 var incorrect1of3 = document.querySelector("#incorrect1of3");
 var incorrect2of3 = document.querySelector("#incorrect2of3");
 var incorrect3of3 = document.querySelector("#incorrect3of3");
 
-//answer set 4//
+//buttons: answer set 4//
 var correct4 = document.querySelector("#correct4");
 var incorrect1of4 = document.querySelector("#incorrect1of4");
 var incorrect2of4 = document.querySelector("#incorrect2of4");
@@ -35,6 +37,7 @@ var incorrect3of4 = document.querySelector("#incorrect3of4");
 
 //last page//
 var highscores = document.querySelector("#HS");
+var topscore = document.querySelector("#topscore");
 
 
 //values and timer//
@@ -42,14 +45,18 @@ var count = 0;
 var timeEl = document.querySelector("#timer");
 var secondsLeft = 30;
 var username = "";
+var timerInterval;
 
-//functions//
 
-// timer// 
+
+//Functions//
+
+
+//timer// 
 
 function setTime() {
     
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
       secondsLeft--;
       timeEl.textContent = secondsLeft + " Seconds left";
   
@@ -59,9 +66,7 @@ function setTime() {
         
         alert('Out of time!! Please submit')
         runhighscores()  
-        
-        
-      }
+     }
   
     }, 1000);
   }
@@ -89,14 +94,38 @@ function runquestion4(){
     question4.setAttribute("style","display: block; margin-left: 25%; margin-top: 25%");
 }
 
-// run high scores//
+// run high scores, store username and score, and stop timer//
+
+function stoptimer() {
+    clearInterval(timerInterval);
+}
 
 function runhighscores() {
-    username = prompt("End of Game - Enter Your Initials");
-    question4.setAttribute("style","display: none;");
-    highscores.setAttribute("style","display: block; margin-left: 25%; margin-top: 25%");
-    timeEl.setAttribute("style", "display: none;")
+    username = prompt("End of Quiz - Enter Your Initials");
+    var bestuser = localStorage.getItem("username");
+    var bestcount = localStorage.getItem("score");
+
+    if (bestcount === null && bestuser === null){
+        localStorage.setItem("username", username);
+        localStorage.setItem("score", count);  
+        bestuser = localStorage.getItem("username");
+        bestcount = localStorage.getItem("score");
+    }
+
+    else if (bestcount <= count) {
+        localStorage.setItem("username", username);
+        localStorage.setItem("score", count); 
+        bestuser = localStorage.getItem("username");
+        bestcount = localStorage.getItem("score");
+    }
+    
+    allquestions.setAttribute("style","display: none;");
+    highscores.setAttribute("style","display: block; margin-left: 25%; margin-top: 20%");
+    timeEl.setAttribute("style", "display: none;");
+    topscore.textContent = `${bestuser} Score: ${bestcount}`;
+    stoptimer();
 }
+
 
 // Answer set 1 //
 
@@ -219,45 +248,45 @@ function correctanswer4() {
     secondsLeft = secondsLeft + 10;
     correct4.setAttribute("style", "background: green");
     setTimeout(()=> {
-        alert('End of quiz click submit to finish')
-        }, "300");
-    }
+        runhighscores()
+        }, "500");
+     }
     
     function wronganswer1of4() {
     
     secondsLeft = secondsLeft - 10;
     incorrect1of4.setAttribute("style", "background: red");
     setTimeout(()=> {
-        alert('End of quiz click submit to finish')
-        }, "300");    
-    }
+        runhighscores()
+        }, "500");
+       }
     
     function wronganswer2of4() {
     
     secondsLeft = secondsLeft - 10;
     incorrect2of4.setAttribute("style", "background: red");
     setTimeout(()=> {
-        alert('End of quiz click submit to finish')
-        }, "300");    
-    }
+        runhighscores()
+        }, "500");
+       }
     
     function wronganswer3of4() {
     
     secondsLeft = secondsLeft - 10;
     incorrect3of4.setAttribute("style", "background: red");
     setTimeout(()=> {
-        alert('End of quiz click submit to finish')
-        }, "300");    
-    }
+        runhighscores()
+        }, "500");
+        }
     
 
 
     // button event listeners//
 
-    // start and submit //
+    // start //
 startbutton.addEventListener("click", runquiz) 
 
-submitall.addEventListener("click", runhighscores)
+
 
 //answer set 1//
 
