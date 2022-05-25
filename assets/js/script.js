@@ -37,7 +37,7 @@ var incorrect3of4 = document.querySelector("#incorrect3of4");
 
 //last page//
 var highscores = document.querySelector("#HS");
-var topscore = document.querySelector("#topscore");
+var topscore = document.querySelector("#TopScore");
 
 
 //values and timer//
