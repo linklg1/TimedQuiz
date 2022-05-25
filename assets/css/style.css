@@ -1,0 +1,22 @@
+
+
+body {
+    background-color: beige;
+}
+
+#question-1, #question-2, #question-3, #question-4 {
+display: none;
+}
+
+#HS {
+    display: none;
+}
+
+#startbutton {
+margin-left: 50%;
+margin-top: 25%;
+}
+
+#timer {
+    font-size: 200%;
+}
